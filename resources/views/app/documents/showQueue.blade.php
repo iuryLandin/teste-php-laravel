@@ -15,7 +15,7 @@
             Documentos
           </a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Importar</li>
+        <li class="breadcrumb-item active" aria-current="page">Fila</li>
       </ol>
     </nav>
   </div>
@@ -24,7 +24,7 @@
 <div class="card p-2 my-2">
   <div class="row">
     <div class="col-md-6 my-1">
-      <h3>Importar Documentos</h3>
+      <h3>Fila de Documentos</h3>
     </div>
   </div>
 
@@ -35,17 +35,18 @@
   @endforeach
 
   <div class="row">
-    {!! Form::open(['method' => 'post', 'url' => route('documents.store'), 'files' => true, 'id' => 'upload-form']) !!}
-    @csrf
-    @method('post')
-    <div class="col-md-6 my-1">
-      <label class="text-warning">Arquivo suportado: JSON</label>
-      <input type="file" class="form-control" name="jsonfile" id="jsonfile" accept="application/json" required />
+    <div class="col-md-12 my-1">
+      <strong>Itens na fila:</strong> {{$totalItems}}
     </div>
-    <div class="col-md-3 my-1">
-      <button class="btn btn-success btn-block" type="submit">Enviar</button>
+
+    @if(isset($totalItems))
+    <div class="col-md-12 my-1">
+      {!! Form::open(['url' => route('documents.processQueue'), 'method' => 'post']) !!}
+      <button class="btn btn-primary" type="submit"><i class="bi bi-arrow-right-square"></i> Processar Fila</button>
+      {!! Form::close() !!}
     </div>
-    {!! Form::close() !!}
+    @endif
+
   </div>
 </div>
 @endsection

@@ -18,4 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 })->name('index');
 
+Route::get('documents/queue', [DocumentsController::class, 'showQueue'])->name('documents.showQueue');
+Route::post('documents/queue', [DocumentsController::class, 'processQueue'])->name('documents.processQueue');
 Route::resource('documents', DocumentsController::class);

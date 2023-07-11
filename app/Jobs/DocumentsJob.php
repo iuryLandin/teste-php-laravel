@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Models\Category;
+use App\Models\Documents;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,14 +16,14 @@ class DocumentsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $validatedData;
+    protected $documentInfo;
 
     /**
      * Create a new job instance.
      */
     public function __construct($data)
     {
-        $this->validatedData = $data;        
+        $this->documentInfo = $data;
     }
 
     /**
@@ -29,9 +31,20 @@ class DocumentsJob implements ShouldQueue
      */
     public function handle(): void
     {
-        try{
+        try {
+            // Pesquisa a categoria pelo nome, se não encontrar irá criar uma nova
+            $category = Category::firstOrCreate(
+                ['name' => $this->documentInfo['category']]
+            );
 
-        }catch(\Exception $e){
+            // Realiza a pesquisa e previne a criação de duplicatas
+            Documents::firstOrCreate([
+                'category_id' => $category->id,
+                'title' => $this->documentInfo['title'],
+                'contents' =>  $this->documentInfo['contents'],
+                'reference' => $this->documentInfo['reference'],
+            ]);
+        } catch (\Exception $e) {
             throw new RuntimeException("Failed to process job. " . $e->getMessage());
         }
     }

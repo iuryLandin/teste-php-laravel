@@ -25,30 +25,30 @@
       <a class="btn btn-sm btn-primary" href="{{ route('documents.create') }}"><i class="bi bi-upload"></i>
         Importar
       </a>
+
+      @if ($hasPendingJobs)
+      <a class="btn btn-sm btn-info" href="{{ route('documents.showQueue') }}"><i class="bi bi-card-list"></i>
+       Ver Fila
+      </a>
+      @endif
     </div>
   </div>
-  <div class="table-responsive">
+  <div class="content">
     @if (session('status'))
     <div class="alert alert-success alert-dismissible fade show my-3" role="alert">
       <span class="alert-inner--icon"><i class="bi bi-check"></i></span>
       <span class="alert-inner--text">{{ session('status') }}</span>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
     </div>
     @endif
     @foreach ($errors->all() as $error)
     <div class="alert alert-danger alert-dismissible fade show my-3" role="alert">
       <span class="alert-inner--icon"><i class="bi bi-exclamation-triangle"></i></span>
       <span class="alert-inner--text">{{ $error }}</span>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
     </div>
     @endforeach
     @if (isset($documents))
     <div id="table-container" class="table-responsive">
-      @include('layouts.partials.admin.table.table_profissoes')
+      @include('layouts.table_documents')
     </div>
     @endif
   </div>
