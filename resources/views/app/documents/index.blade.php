@@ -18,10 +18,10 @@
 
 <div class="card p-2 my-2">
   <div class="row">
-    <div class="col-md-6 my-1">
+    <div class="col my-1">
       <h3>Documentos</h3>
     </div>
-    <div class="col-md-6 my-2">
+    <div class="col my-2 d-flex justify-content-end gap-2">
       <a class="btn btn-sm btn-primary" href="{{ route('documents.create') }}"><i class="bi bi-upload"></i>
         Importar
       </a>
