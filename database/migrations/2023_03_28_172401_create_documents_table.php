@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->bigInteger('category_id');
             $table->string('title', 60);
+            $table->year('reference');
             $table->text('contents');
 
             $table->foreign('category_id')
